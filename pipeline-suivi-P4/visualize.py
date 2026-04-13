@@ -99,4 +99,4 @@ for frame_idx, img_path in enumerate(image_paths):
         print(f"  {frame_idx + 1}/{len(image_paths)} frames")
 
 writer.release()
-print(f"\n✅Vidéo de démo générée : {OUTPUT}")
+print(f"\nVidéo de démo générée : {OUTPUT}")
