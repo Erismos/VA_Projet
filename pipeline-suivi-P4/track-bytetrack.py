@@ -112,4 +112,4 @@ mot_df = pd.DataFrame(mot_results,
     columns=["frame","id","x","y","w","h","conf","x3d","y3d","z3d"])
 results_file = f"{OUTPUT_DIR}/MOT17-02.txt"
 mot_df.to_csv(results_file, header=False, index=False)
-print(f"📄 Résultats MOT sauvegardés : {results_file}")
+print(f"Résultats MOT sauvegardés : {results_file}")

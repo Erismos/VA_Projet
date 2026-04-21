@@ -211,3 +211,6 @@ __marimo__/
 consignes.md
 Prompt.md
 temp.md
+
+data/raw
+data/processed

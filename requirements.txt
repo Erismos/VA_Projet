@@ -5,4 +5,14 @@ torch>=2.2.0
 torchvision>=0.17.0
 pyyaml>=6.0.0
 numpy>=1.24.0
-pandas>=2.0.0 
+
+pandas>=2.0.0
+requests
+kaggle
+pillow
+matplotlib
+tqdm
+pycocotools
+scikit-learn
+albumentations
+pytest
