@@ -107,6 +107,9 @@ python -m project.cli p4 --detector-backend detections-json --mot-seq-dir data/r
 
 # P5 evaluation (reel, sans mock)
 python -m project.cli p5 --skip-prepare-data --gt-json data/processed/val_gt.json --p2-preds results/p2/inference/predictions.json --p3-preds results/p3/predictions.json --output-dir results/p5
+
+# Video source reproductible pour inference (depuis MOT17)
+python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --output data/sample_video.mp4 --fps 25
 ```
 
 ## Workflow Bout-en-Bout recommande
@@ -117,9 +120,15 @@ python -m project.cli p5 --skip-prepare-data --gt-json data/processed/val_gt.jso
 python -m project.cli p5 --mot-root data/raw/MOT17
 ```
 
-2. Produire des predictions P2 et P3 (JSON).
-3. Lancer l'evaluation reelle P5 avec les chemins de predictions.
-4. Lancer P4 en mode `detections-json` pour suivre a partir des detections exportees.
+2. Generer une video source stable pour P2/P3 (a partir de MOT17):
+
+```bash
+python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --output data/sample_video.mp4 --fps 25
+```
+
+3. Produire des predictions P2 et P3 (JSON).
+4. Lancer l'evaluation reelle P5 avec les chemins de predictions.
+5. Lancer P4 en mode `detections-json` pour suivre a partir des detections exportees.
 
 Sorties principales:
 - `results/p2/inference/predictions.json`

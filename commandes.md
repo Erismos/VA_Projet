@@ -42,6 +42,13 @@ python -m project.cli p2 train --model fasterrcnn --dataset-root data/processed/
 
 ## 3) Inference / Export des prédictions
 
+### 3.0 Générer la vidéo source d'inférence (obligatoire)
+Cette étape supprime l'ambiguïté sur `data/sample_video.mp4` en la générant depuis MOT17.
+
+```powershell
+python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --output data/sample_video.mp4 --fps 25
+```
+
 ### 3.1 P2 inference
 
 ```powershell

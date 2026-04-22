@@ -10,11 +10,16 @@ Portée: conserver uniquement les actions encore nécessaires avant validation f
 - [ ] Archiver les sorties de référence (rapports + fichiers générés) pour preuve de reproductibilité.
 - [ ] Exécuter la commande `python -m project.cli e2e-smoke` sur données réelles et valider les artefacts de sortie.
 
-2. Consolidation métriques projet
+2. Source vidéo d'inférence manquante
+- [x] Définir une vidéo source unique pour la phase `3) Inference / Export des prédictions` (actuellement `data/sample_video.mp4` n'est pas garantie dans le dépôt).
+- [x] Implémentation retenue: générer `data/sample_video.mp4` à partir d'une séquence MOT17 (`data/raw/MOT17/train/MOT17-02-FRCNN/img1`) pour aligner P2/P3/P5/P4 sur la même base.
+- [x] Ajouter cette génération dans le workflow (commande dédiée ou script utilitaire) et documenter le chemin final dans `commandes.md`.
+
+3. Consolidation métriques projet
 - [x] Produire un tableau unique consolidé (détection + tracking + performances) dans un artefact unique sous results.
 - [x] Vérifier la cohérence des noms de modèles et colonnes de métriques entre P2, P3, P4, P5.
 
-3. Robustesse opérationnelle
+4. Robustesse opérationnelle
 - [x] Ajouter un smoke test de non-régression (commande unique) couvrant au minimum conversion prédictions + tracking detections-json + génération rapport P5.
 - [x] Valider explicitement les cas limites frame_id/classes sur un petit jeu de tests dédiés.
 

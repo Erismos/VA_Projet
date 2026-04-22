@@ -28,7 +28,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Unified project launcher for P1-P5")
     parser.add_argument(
         "component",
-        choices=["p1", "p2", "p3", "p3-benchmark", "p4", "p4-eval", "p4-visualize", "p5", "e2e-smoke"],
+        choices=[
+            "p1",
+            "p2",
+            "p3",
+            "p3-benchmark",
+            "p4",
+            "p4-eval",
+            "p4-visualize",
+            "p5",
+            "mot17-video",
+            "e2e-smoke",
+        ],
         help="Pipeline component to run",
     )
     parser.add_argument("args", nargs=argparse.REMAINDER, help="Arguments forwarded to the selected component")
@@ -64,6 +75,9 @@ def main() -> None:
         return
     if args.component == "p5":
         _run_module("main_p5", component_args)
+        return
+    if args.component == "mot17-video":
+        _run_module("p5.data.mot_to_video", component_args)
         return
     if args.component == "e2e-smoke":
         _run_module("project.e2e", component_args)

@@ -258,6 +258,36 @@ Actions réalisées:
 - Ajout de `tests/test_project_e2e.py`.
 - Couverture des deux chemins:
   - `skip_p4=True`
+
+## Itération 10 - Résolution du blocant vidéo d'inférence
+
+### 1) Génération déterministe de la vidéo source
+Statut: fait
+
+Actions réalisées:
+- Ajout de `p5/data/mot_to_video.py`.
+- Nouveau flux: conversion d'une séquence MOT17 (`img1`) vers `data/sample_video.mp4`.
+- Paramètres exposés:
+  - `--seq-dir`
+  - `--output`
+  - `--fps`
+  - `--max-frames`
+
+### 2) Intégration dans la CLI projet
+Statut: fait
+
+Actions réalisées:
+- Ajout du composant `mot17-video` dans `project/cli.py`.
+- Commande unifiée disponible:
+  - `python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --output data/sample_video.mp4 --fps 25`
+
+### 3) Documentation et suivi
+Statut: fait
+
+Actions réalisées:
+- Mise à jour de `commandes.md` avec une étape obligatoire `3.0` avant les inférences P2/P3.
+- Mise à jour de `README.md` pour inclure la commande de génération vidéo.
+- Mise à jour de `TODO.md`: point `2. Source vidéo d'inférence manquante` passé en terminé.
   - `skip_p4=False`
 - Vérification de la génération des artefacts projet consolidés.
 
