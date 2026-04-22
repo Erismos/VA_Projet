@@ -1,0 +1,14 @@
+mot_seq_dir: data/raw/MOT17/train/MOT17-02-FRCNN
+output_dir: results/p4
+output_name: MOT17-02
+
+detector_backend: detections-json
+weights: yolov8n.pt
+detections_json: results/p2/inference/predictions.json
+
+conf: 0.30
+iou: 0.50
+device: cpu
+trail_length: 30
+tracker_iou: 0.30
+tracker_max_age: 20

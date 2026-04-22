@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import yaml
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,46 @@ from torchvision.models.detection import (
 )
 
 from p2.export_utils import save_json
+
+
+def validate_yolo_training_inputs(dataset_yaml: str) -> dict[str, Any]:
+    yaml_path = Path(dataset_yaml)
+    if not yaml_path.exists():
+        return {"ok": False, "reason": f"Dataset YAML not found: {dataset_yaml}"}
+
+    with yaml_path.open("r", encoding="utf-8") as handle:
+        payload = yaml.safe_load(handle) or {}
+
+    required_keys = {"path", "train", "val", "names"}
+    missing = sorted(required_keys - set(payload.keys()))
+    if missing:
+        return {"ok": False, "reason": f"Dataset YAML missing keys: {missing}"}
+
+    root = Path(payload["path"]).expanduser()
+    train_dir = root / str(payload["train"])
+    val_dir = root / str(payload["val"])
+
+    if not root.exists():
+        return {"ok": False, "reason": f"Dataset root not found: {root}"}
+    if not train_dir.exists():
+        return {"ok": False, "reason": f"Train path not found: {train_dir}"}
+    if not val_dir.exists():
+        return {"ok": False, "reason": f"Val path not found: {val_dir}"}
+
+    train_images = list(train_dir.glob("*.jpg"))
+    val_images = list(val_dir.glob("*.jpg"))
+    if not train_images:
+        return {"ok": False, "reason": f"No train images found in: {train_dir}"}
+    if not val_images:
+        return {"ok": False, "reason": f"No val images found in: {val_dir}"}
+
+    return {
+        "ok": True,
+        "dataset_yaml": str(yaml_path),
+        "dataset_root": str(root),
+        "train_images": len(train_images),
+        "val_images": len(val_images),
+    }
 
 
 def train_yolo(

@@ -9,8 +9,8 @@ dans le rapport :
   - Résultats sauvegardés en JSON avec le même schéma que P2
 
 Usage :
-    python -m p3.benchmark --source data/video.mp4 --model detr --device cuda
-    python -m p3.benchmark --source data/video.mp4 --model dino_detr --device cuda --warmup 10 --frames 200
+    python -m vision_transformer_p3.benchmark --source data/video.mp4 --model detr --device cuda
+    python -m vision_transformer_p3.benchmark --source data/video.mp4 --model dino_detr --device cuda --warmup 10 --frames 200
 """
 from __future__ import annotations
 
@@ -144,7 +144,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--frames", type=int, default=100, help="Frames mesurées.")
     parser.add_argument(
         "--output",
-        default="results/detr_benchmark.json",
+        default="results/p3/benchmark_report.json",
         help="Fichier JSON de sortie.",
     )
     return parser

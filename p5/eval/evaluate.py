@@ -34,6 +34,27 @@ def compare_models(results_dict):
         print(f"{model:<15} | {stats[0]:.4f}      | {stats[1]:.4f}      | {stats[2]:.4f}")
     print("="*50 + "\n")
 
+
+def save_comparison_json(results_dict, output_path):
+    """
+    Saves key detection metrics to JSON for reporting automation.
+    results_dict: {model_name: stats_array}
+    """
+    rows = []
+    for model, stats in results_dict.items():
+        rows.append(
+            {
+                "model": model,
+                "mAP_50_95": float(stats[0]),
+                "mAP_50": float(stats[1]),
+                "mAP_75": float(stats[2]),
+            }
+        )
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as handle:
+        json.dump(rows, handle, indent=2)
+
 if __name__ == "__main__":
     # Example usage:
     # stats_p2 = evaluate_coco('data/processed/val_gt.json', 'results/p2/preds.json')

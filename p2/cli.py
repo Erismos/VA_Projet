@@ -4,7 +4,7 @@ import argparse
 
 from p2.benchmark import benchmark_video
 from p2.inference import run_inference
-from p2.train import train_fasterrcnn_placeholder, train_yolo
+from p2.train import train_fasterrcnn_placeholder, train_yolo, validate_yolo_training_inputs
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -23,6 +23,7 @@ def build_parser() -> argparse.ArgumentParser:
     tr.add_argument("--project", default="models/p2")
     tr.add_argument("--name", default="baseline")
     tr.add_argument("--output-dir", default="models/p2/fasterrcnn_baseline")
+    tr.add_argument("--dry-run", action="store_true", help="Validate inputs only, do not start training")
 
     inf = sub.add_parser("infer", help="Run inference and export predictions")
     inf.add_argument("--model", choices=["yolo", "fasterrcnn"], default="yolo")
@@ -55,6 +56,12 @@ def main() -> None:
         if args.model == "yolo":
             if not args.dataset_yaml:
                 raise ValueError("--dataset-yaml is required for yolo training")
+            if args.dry_run:
+                out = validate_yolo_training_inputs(args.dataset_yaml)
+                out["model"] = "yolo"
+                out["dry_run"] = True
+                print(out)
+                return
             out = train_yolo(
                 weights=args.weights,
                 dataset_yaml=args.dataset_yaml,
@@ -68,6 +75,15 @@ def main() -> None:
         else:
             if not args.dataset_root:
                 raise ValueError("--dataset-root is required for fasterrcnn training")
+            if args.dry_run:
+                out = {
+                    "ok": True,
+                    "model": "fasterrcnn",
+                    "dry_run": True,
+                    "dataset_root": args.dataset_root,
+                }
+                print(out)
+                return
             out = train_fasterrcnn_placeholder(
                 dataset_root=args.dataset_root,
                 epochs=args.epochs,

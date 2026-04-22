@@ -85,3 +85,44 @@ Colonnes:
 - [x] Mesure FPS et memoire GPU disponible via benchmark.
 - [x] Baseline YOLO livrable rapidement pour P4.
 - [x] Instructions de reproduction presentes.
+
+## Point d'entree unifie (P1 a P5)
+
+Un lanceur unique est disponible via `python -m project.cli`.
+
+Exemples:
+
+```bash
+# P2
+python -m project.cli p2 infer --model yolo --weights yolo11n.pt --source data/sample_video.mp4 --output-dir results/p2/inference --save-video
+
+# P3 detection
+python -m project.cli p3 --source data/sample_video.mp4 --model detr --output results/p3/predictions.json
+
+# P3 benchmark
+python -m project.cli p3-benchmark --source data/sample_video.mp4 --model detr --output results/p3/benchmark_report.json
+
+# P4 tracking
+python -m project.cli p4 --detector-backend detections-json --mot-seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --detections-json results/p2/inference/predictions.json --output-dir results/p4 --output-name MOT17-02
+
+# P5 evaluation (reel, sans mock)
+python -m project.cli p5 --skip-prepare-data --gt-json data/processed/val_gt.json --p2-preds results/p2/inference/predictions.json --p3-preds results/p3/predictions.json --output-dir results/p5
+```
+
+## Workflow Bout-en-Bout recommande
+
+1. Preparer les donnees MOT17 et le GT COCO (P5):
+
+```bash
+python -m project.cli p5 --mot-root data/raw/MOT17
+```
+
+2. Produire des predictions P2 et P3 (JSON).
+3. Lancer l'evaluation reelle P5 avec les chemins de predictions.
+4. Lancer P4 en mode `detections-json` pour suivre a partir des detections exportees.
+
+Sorties principales:
+- `results/p2/inference/predictions.json`
+- `results/p3/predictions.json`
+- `results/p5/comparison_report.json`
+- `results/p4/<output-name>.txt` (format MOT)

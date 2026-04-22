@@ -18,8 +18,8 @@ Usage rapide:
     records   = detector.detect_frame(frame_bgr, frame_id=42)
 
 Usage ligne de commande:
-    python -m p3.detector --source video.mp4 --output results/detr_predictions.json
-    python -m p3.detector --source video.mp4 --model dino_detr --output results/dino_predictions.json
+    python -m vision_transformer_p3.detector --source video.mp4 --output results/p3/predictions.json
+    python -m vision_transformer_p3.detector --source video.mp4 --model dino_detr --output results/p3/predictions_dino.json
 """
 from __future__ import annotations
 
@@ -334,7 +334,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--output",
-        default="results/detr_predictions.json",
+        default="results/p3/predictions.json",
         help="Chemin du fichier JSON de sortie.",
     )
     parser.add_argument(
