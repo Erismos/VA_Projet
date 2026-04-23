@@ -214,3 +214,5 @@ temp.md
 
 data/raw
 data/processed
+*.pth
+*.mp4

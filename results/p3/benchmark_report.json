@@ -1,0 +1,17 @@
+[
+  {
+    "model": "detr",
+    "device": "cpu",
+    "threshold": 0.7,
+    "source": "data/sample_video.mp4",
+    "warmup_frames": 5,
+    "benchmark_frames": 100,
+    "avg_fps": 0.97,
+    "avg_latency_ms": 1033.95,
+    "median_latency_ms": 993.16,
+    "p95_latency_ms": 1241.58,
+    "min_latency_ms": 973.72,
+    "max_latency_ms": 1309.53,
+    "gpu_peak_memory_gb": 0.0
+  }
+]

@@ -31,13 +31,13 @@ Sorties attendues:
 Utiliser le YAML généré à l'étape data.
 
 ```powershell
-python -m project.cli p2 train --model yolo --weights yolo11n.pt --dataset-yaml data/processed/mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device cpu --project models/p2 --name yolo_baseline
+python -m project.cli p2 train --model yolo --weights yolo11n.pt --dataset-yaml data/processed/mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device 0 --project models/p2 --name yolo_baseline
 ```
 
 ### 2.2 Entraîner P2 Faster R-CNN (optionnel)
 
 ```powershell
-python -m project.cli p2 train --model fasterrcnn --dataset-root data/processed/MOT17_YOLO_DATASET --epochs 10 --device cpu --output-dir models/p2/fasterrcnn_baseline
+python -m project.cli p2 train --model fasterrcnn --dataset-root data/processed/MOT17_YOLO_DATASET --epochs 10 --device 0 --output-dir models/p2/fasterrcnn_baseline
 ```
 
 ## 3) Inference / Export des prédictions
@@ -52,7 +52,7 @@ python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN 
 ### 3.1 P2 inference
 
 ```powershell
-python -m project.cli p2 infer --model yolo --weights yolo11n.pt --source data/sample_video.mp4 --output-dir results/p2/inference --conf 0.25 --iou 0.45 --device cpu --save-video
+python -m project.cli p2 infer --model yolo --weights yolo11n.pt --source data/sample_video.mp4 --output-dir results/p2/inference --conf 0.25 --iou 0.45 --device 0 --save-video
 ```
 
 ### 3.2 P3 inference

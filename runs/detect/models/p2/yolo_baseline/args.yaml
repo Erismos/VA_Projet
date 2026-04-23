@@ -10,7 +10,7 @@ imgsz: 640
 save: true
 save_period: -1
 cache: false
-device: cpu
+device: '0'
 workers: 8
 project: models/p2
 name: yolo_baseline
@@ -107,4 +107,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: C:\Users\cleme\Documents\uqac\vision_artificielle\VA_Projet\runs\detect\models\p2\yolo_baseline
+save_dir: D:\Clement\Documents\UQAC\VA_Projet\runs\detect\models\p2\yolo_baseline

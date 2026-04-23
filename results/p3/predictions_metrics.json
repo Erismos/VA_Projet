@@ -1,0 +1,13 @@
+[
+  {
+    "total_frames": 600,
+    "total_detections": 21478,
+    "total_time_s": 607.255,
+    "avg_fps": 0.99,
+    "avg_ms_per_frame": 1012.09,
+    "model": "detr",
+    "threshold": 0.7,
+    "device": "cpu",
+    "source": "data/sample_video.mp4"
+  }
+]
