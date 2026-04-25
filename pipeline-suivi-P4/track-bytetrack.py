@@ -17,7 +17,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.append(str(ROOT_DIR))
 
-from p2.detectors import DetectorConfig, create_detector
+from object_detection.detectors import DetectorConfig, create_detector
 
 
 def get_color(track_id: int) -> tuple[int, int, int]:

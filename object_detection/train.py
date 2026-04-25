@@ -12,7 +12,7 @@ from torchvision.models.detection import (
     fasterrcnn_resnet50_fpn,
 )
 
-from p2.export_utils import save_json
+from object_detection.export_utils import save_json
 
 
 def validate_yolo_training_inputs(dataset_yaml: str) -> dict[str, Any]:
@@ -124,14 +124,14 @@ def build_parser() -> argparse.ArgumentParser:
     yolo.add_argument("--imgsz", type=int, default=640)
     yolo.add_argument("--batch", type=int, default=16)
     yolo.add_argument("--device", default="cpu")
-    yolo.add_argument("--project", default="models/p2")
+    yolo.add_argument("--project", default="models/object_detection")
     yolo.add_argument("--name", default="yolo_baseline")
 
     frcnn = sub.add_parser("fasterrcnn")
     frcnn.add_argument("--dataset-root", required=True)
     frcnn.add_argument("--epochs", type=int, default=10)
     frcnn.add_argument("--device", default="cpu")
-    frcnn.add_argument("--output-dir", default="models/p2/fasterrcnn_baseline")
+    frcnn.add_argument("--output-dir", default="models/object_detection/fasterrcnn_baseline")
 
     return parser
 

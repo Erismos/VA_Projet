@@ -1,1 +1,1 @@
-python -m project.cli p2 train --model yolo --weights yolo11n.pt --dataset-yaml data\processed\mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device cpu --project models/p2 --name yolo_baseline
+python -m project.cli object-detection train --model yolo --weights yolo11n.pt --dataset-yaml data\processed\mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device cpu --project models/object_detection --name yolo_baseline

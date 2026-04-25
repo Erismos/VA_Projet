@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from p2.train import validate_yolo_training_inputs
+from object_detection.train import validate_yolo_training_inputs
 from p5.data.split_data import validate_yolo_dataset
 
 

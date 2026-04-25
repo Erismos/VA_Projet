@@ -121,7 +121,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-dir", default="results/project")
     parser.add_argument("--mot-seq-dir", default="data/raw/MOT17/train/MOT17-02-FRCNN")
     parser.add_argument("--gt-json", default="data/processed/val_gt.json")
-    parser.add_argument("--p2-preds", default="results/p2/inference/predictions.json")
+    parser.add_argument("--p2-preds", default="results/object_detection/inference/predictions.json")
     parser.add_argument("--p3-preds", default="results/p3/predictions.json")
     parser.add_argument("--p5-output-dir", default=None)
     parser.add_argument("--p4-output-dir", default=None)

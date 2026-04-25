@@ -7,8 +7,8 @@ from typing import Any
 
 import cv2
 
-from p2.detectors import DetectorConfig, create_detector
-from p2.export_utils import save_csv, save_json
+from object_detection.detectors import DetectorConfig, create_detector
+from object_detection.export_utils import save_csv, save_json
 
 
 def _draw_detections(frame: Any, detections: list[dict[str, Any]]) -> Any:
@@ -124,7 +124,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--model", default="yolo", choices=["yolo", "fasterrcnn"])
     parser.add_argument("--weights", default="yolo11n.pt")
     parser.add_argument("--source", required=True, help="Image or video path")
-    parser.add_argument("--output-dir", default="results/p2/inference")
+    parser.add_argument("--output-dir", default="results/object_detection/inference")
     parser.add_argument("--conf", type=float, default=0.25)
     parser.add_argument("--iou", type=float, default=0.45)
     parser.add_argument("--device", default="cpu")

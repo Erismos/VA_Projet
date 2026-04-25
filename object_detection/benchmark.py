@@ -8,8 +8,8 @@ from typing import Any
 import cv2
 import torch
 
-from p2.detectors import DetectorConfig, create_detector
-from p2.export_utils import save_json
+from object_detection.detectors import DetectorConfig, create_detector
+from object_detection.export_utils import save_json
 
 
 def benchmark_video(
@@ -85,7 +85,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--warmup-frames", type=int, default=10)
     parser.add_argument("--max-frames", type=int, default=200)
-    parser.add_argument("--output", default="results/p2/benchmark_report.json")
+    parser.add_argument("--output", default="results/object_detection/benchmark_report.json")
     return parser
 
 

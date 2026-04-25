@@ -24,7 +24,7 @@ from p5.validation import (
 class P5Config:
     mot_root: str = "data/raw/MOT17"
     gt_path: str = "data/processed/val_gt.json"
-    p2_preds: str = "results/p2/inference/predictions.json"
+    p2_preds: str = "results/object_detection/inference/predictions.json"
     p3_preds: str = "results/p3/predictions.json"
     output_dir: str = "results/p5"
     skip_prepare_data: bool = False
@@ -74,13 +74,13 @@ def _write_comparison_report(report_path: str, rows: list[dict[str, float]]) -> 
 
 def _build_p2_train_command(dataset_yaml: str, device: str = "cpu") -> str:
     return (
-        "python -m project.cli p2 train "
+        "python -m project.cli object-detection train "
         "--model yolo "
         "--weights yolo11n.pt "
         f"--dataset-yaml {dataset_yaml} "
         "--epochs 30 --imgsz 640 --batch 16 "
         f"--device {device} "
-        "--project models/p2 --name yolo_baseline"
+        "--project models/object_detection --name yolo_baseline"
     )
 
 
@@ -204,7 +204,7 @@ def evaluate_p5(cfg: P5Config) -> dict[str, Any]:
 def run_p5_pipeline(
     mot_root: str = "data/raw/MOT17",
     gt_path: str = "data/processed/val_gt.json",
-    p2_preds: str = "results/p2/inference/predictions.json",
+    p2_preds: str = "results/object_detection/inference/predictions.json",
     p3_preds: str = "results/p3/predictions.json",
     output_dir: str = "results/p5",
     skip_prepare_data: bool = False,

@@ -7,7 +7,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="P5 unified preparation + evaluation pipeline")
     parser.add_argument("--mot-root", default="data/raw/MOT17")
     parser.add_argument("--gt-json", default="data/processed/val_gt.json")
-    parser.add_argument("--p2-preds", default="results/p2/inference/predictions.json")
+    parser.add_argument("--p2-preds", default="results/object_detection/inference/predictions.json")
     parser.add_argument("--p3-preds", default="results/p3/predictions.json")
     parser.add_argument("--output-dir", default="results/p5")
     parser.add_argument(

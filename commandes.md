@@ -31,13 +31,13 @@ Sorties attendues:
 Utiliser le YAML généré à l'étape data.
 
 ```powershell
-python -m project.cli p2 train --model yolo --weights yolo11n.pt --dataset-yaml data/processed/mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device 0 --project models/p2 --name yolo_baseline
+python -m project.cli object-detection train --model yolo --weights yolo11n.pt --dataset-yaml data/processed/mot17_pedestrian_yolo.yaml --epochs 30 --imgsz 640 --batch 16 --device 0 --project models/object_detection --name yolo_baseline
 ```
 
 ### 2.2 Entraîner P2 Faster R-CNN (optionnel)
 
 ```powershell
-python -m project.cli p2 train --model fasterrcnn --dataset-root data/processed/MOT17_YOLO_DATASET --epochs 10 --device 0 --output-dir models/p2/fasterrcnn_baseline
+python -m project.cli object-detection train --model fasterrcnn --dataset-root data/processed/MOT17_YOLO_DATASET --epochs 10 --device 0 --output-dir models/object_detection/fasterrcnn_baseline
 ```
 
 ## 3) Inference / Export des prédictions
@@ -52,7 +52,7 @@ python -m project.cli mot17-video --seq-dir data/raw/MOT17/train/MOT17-02-FRCNN 
 ### 3.1 P2 inference
 
 ```powershell
-python -m project.cli p2 infer --model yolo --weights yolo11n.pt --source data/sample_video.mp4 --output-dir results/p2/inference --conf 0.25 --iou 0.45 --device 0 --save-video
+python -m project.cli object-detection infer --model yolo --weights yolo11n.pt --source data/sample_video.mp4 --output-dir results/object_detection/inference --conf 0.25 --iou 0.45 --device 0 --save-video
 ```
 
 ### 3.2 P3 inference
@@ -73,7 +73,7 @@ python -m project.cli p3-benchmark --source data/sample_video.mp4 --model detr -
 Cette commande compare P2 et P3 avec le GT COCO.
 
 ```powershell
-python -m project.cli p5 --skip-prepare-data --gt-json data/processed/val_gt.json --p2-preds results/p2/inference/predictions.json --p3-preds results/p3/predictions.json --output-dir results/p5
+python -m project.cli p5 --skip-prepare-data --gt-json data/processed/val_gt.json --p2-preds results/object_detection/inference/predictions.json --p3-preds results/p3/predictions.json --output-dir results/p5
 ```
 
 Sorties attendues:
@@ -85,7 +85,7 @@ Sorties attendues:
 ### 4.2 Tracking P4 avec détections P2/P3
 
 ```powershell
-python -m project.cli p4 --detector-backend detections-json --mot-seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --detections-json results/p2/inference/predictions.json --output-dir results/p4 --output-name MOT17-02
+python -m project.cli p4 --detector-backend detections-json --mot-seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --detections-json results/object_detection/inference/predictions.json --output-dir results/p4 --output-name MOT17-02
 ```
 
 ### 4.3 Evaluation tracking P4
@@ -111,7 +111,7 @@ python -m pytest -q tests/test_p5_validation.py tests/test_project_e2e.py tests/
 ### 5.2 Smoke test projet complet
 
 ```powershell
-python -m project.cli e2e-smoke --output-dir results/project --mot-seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --gt-json data/processed/val_gt.json --p2-preds results/p2/inference/predictions.json --p3-preds results/p3/predictions.json --p5-output-dir results/project/p5 --p4-output-dir results/project/p4 --output-name MOT17-02-smoke
+python -m project.cli e2e-smoke --output-dir results/project --mot-seq-dir data/raw/MOT17/train/MOT17-02-FRCNN --gt-json data/processed/val_gt.json --p2-preds results/object_detection/inference/predictions.json --p3-preds results/p3/predictions.json --p5-output-dir results/project/p5 --p4-output-dir results/project/p4 --output-name MOT17-02-smoke
 ```
 
 Sorties attendues:

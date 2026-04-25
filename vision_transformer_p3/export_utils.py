@@ -8,7 +8,7 @@ functions are duplicated here so P3 can run standalone.
 from __future__ import annotations
 
 try:
-    from p2.export_utils import save_csv, save_json  # noqa: F401 (re-export)
+    from object_detection.export_utils import save_csv, save_json  # noqa: F401 (re-export)
 except ModuleNotFoundError:
     # ── Standalone fallback (same implementation as P2) ──────────────────────
     import csv

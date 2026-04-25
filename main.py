@@ -1,4 +1,4 @@
-from p2.cli import main
+from object_detection.cli import main
 
 
 if __name__ == "__main__":

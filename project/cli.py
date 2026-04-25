@@ -31,6 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=[
             "p1",
             "p2",
+            "object-detection",
             "p3",
             "p3-benchmark",
             "p4",
@@ -55,8 +56,8 @@ def main() -> None:
     if args.component == "p1":
         _run_module("P1.cli", component_args)
         return
-    if args.component == "p2":
-        _run_module("p2.cli", component_args)
+    if args.component in {"p2", "object-detection"}:
+        _run_module("object_detection.cli", component_args)
         return
     if args.component == "p3":
         _run_module("vision_transformer_p3.detector", component_args)

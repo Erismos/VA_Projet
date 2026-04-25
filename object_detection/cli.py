@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import argparse
 
-from p2.benchmark import benchmark_video
-from p2.inference import run_inference
-from p2.train import train_fasterrcnn_placeholder, train_yolo, validate_yolo_training_inputs
+from object_detection.benchmark import benchmark_video
+from object_detection.inference import run_inference
+from object_detection.train import train_fasterrcnn_placeholder, train_yolo, validate_yolo_training_inputs
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -20,16 +20,16 @@ def build_parser() -> argparse.ArgumentParser:
     tr.add_argument("--imgsz", type=int, default=640)
     tr.add_argument("--batch", type=int, default=16)
     tr.add_argument("--device", default="cpu")
-    tr.add_argument("--project", default="models/p2")
+    tr.add_argument("--project", default="models/object_detection")
     tr.add_argument("--name", default="baseline")
-    tr.add_argument("--output-dir", default="models/p2/fasterrcnn_baseline")
+    tr.add_argument("--output-dir", default="models/object_detection/fasterrcnn_baseline")
     tr.add_argument("--dry-run", action="store_true", help="Validate inputs only, do not start training")
 
     inf = sub.add_parser("infer", help="Run inference and export predictions")
     inf.add_argument("--model", choices=["yolo", "fasterrcnn"], default="yolo")
     inf.add_argument("--weights", default="yolo11n.pt")
     inf.add_argument("--source", required=True)
-    inf.add_argument("--output-dir", default="results/p2/inference")
+    inf.add_argument("--output-dir", default="results/object_detection/inference")
     inf.add_argument("--conf", type=float, default=0.25)
     inf.add_argument("--iou", type=float, default=0.45)
     inf.add_argument("--device", default="cpu")
@@ -44,7 +44,7 @@ def build_parser() -> argparse.ArgumentParser:
     bm.add_argument("--device", default="cpu")
     bm.add_argument("--warmup-frames", type=int, default=10)
     bm.add_argument("--max-frames", type=int, default=200)
-    bm.add_argument("--output", default="results/p2/benchmark_report.json")
+    bm.add_argument("--output", default="results/object_detection/benchmark_report.json")
 
     return parser
 
