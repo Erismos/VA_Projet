@@ -1,0 +1,9 @@
+[
+  {
+    "model": "fasterrcnn",
+    "dataset_root": "data/processed/MOT17_YOLO_DATASET",
+    "epochs": 10,
+    "device": "cpu",
+    "note": "Starter scaffold created. Add your dataset adapter and DataLoader to complete training."
+  }
+]

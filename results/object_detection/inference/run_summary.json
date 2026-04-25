@@ -1,0 +1,12 @@
+[
+  {
+    "source": "data\\sample_video.mp4",
+    "model": "yolo",
+    "weights": "yolo11n.pt",
+    "frames": 600,
+    "detections": 6761,
+    "inference_fps": 50.04659671803428,
+    "json": "results\\object_detection\\inference\\predictions.json",
+    "csv": "results\\object_detection\\inference\\predictions.csv"
+  }
+]
