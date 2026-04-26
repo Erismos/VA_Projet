@@ -193,7 +193,7 @@ La robustesse est assurée par:
 - Rapports structurés incluant verdict et evidence trail
 
 ## 9. Reproductibilité et commande de référence
-Le projet fournit des commandes de référence standardisées dans commandes.md permettant de reproduire les résultats rapportés. La commande complète d'évaluation comparative (P5) sur la séquence MOT17-02-FRCNN avec les nouveaux résultats est:
+La commande complète d'évaluation comparative (P5) sur la séquence MOT17-02-FRCNN avec les nouveaux résultats est:
 
 ```powershell
 python -m project.cli evaluation-pipeline \
