@@ -216,3 +216,4 @@ data/raw
 data/processed
 *.pth
 *.mp4
+models/*
