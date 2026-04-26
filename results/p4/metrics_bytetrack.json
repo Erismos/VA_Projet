@@ -5,5 +5,5 @@
   "idf1": 0.6479660379386318,
   "hota": null,
   "hota_source": "trackeval-not-installed",
-  "metrics_csv": "results\\p4\\metrics_bytetrack.csv"
+  "metrics_csv": "results/p4/metrics_bytetrack.csv"
 }
