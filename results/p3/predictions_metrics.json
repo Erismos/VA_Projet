@@ -2,9 +2,9 @@
   {
     "total_frames": 600,
     "total_detections": 21478,
-    "total_time_s": 614.694,
+    "total_time_s": 614.305,
     "avg_fps": 0.98,
-    "avg_ms_per_frame": 1024.49,
+    "avg_ms_per_frame": 1023.84,
     "model": "detr",
     "threshold": 0.7,
     "device": "cpu",

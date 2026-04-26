@@ -1,0 +1,58 @@
+{
+  "eval_mode": "single-sequence",
+  "source_gt_coherence": {
+    "ok": true,
+    "errors": [],
+    "details": {
+      "eval_mode": "single-sequence",
+      "gt_sequence_count": 1,
+      "gt_sequences": [
+        "MOT17-02-FRCNN"
+      ],
+      "p2_source": {
+        "sidecar": "results\\object_detection\\inference_best\\run_summary.json",
+        "source": "data\\sample_video.mp4",
+        "sequence": null
+      },
+      "p3_source": {
+        "sidecar": "results\\p3\\predictions_metrics.json",
+        "source": "data/sample_video.mp4",
+        "sequence": null
+      }
+    }
+  },
+  "mapping": {
+    "p2": {
+      "mapping_type": "frame-only",
+      "frames_seen": 600,
+      "frames_mapped": 600,
+      "frames_unmapped": 0
+    },
+    "p3": {
+      "mapping_type": "frame-only",
+      "frames_seen": 600,
+      "frames_mapped": 600,
+      "frames_unmapped": 0
+    }
+  },
+  "categories": {
+    "gt": [
+      1
+    ],
+    "p2_predictions": [
+      1
+    ],
+    "p3_predictions": [
+      1
+    ]
+  },
+  "verdict": {
+    "protocol": {
+      "status": "PASS",
+      "checks": {
+        "source_gt_coherence": "PASS",
+        "sanity_checks": "PASS"
+      }
+    }
+  }
+}

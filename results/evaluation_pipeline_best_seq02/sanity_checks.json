@@ -1,0 +1,26 @@
+{
+  "empty_predictions": {
+    "mAP_50_95": 0.0,
+    "mAP_50": 0.0,
+    "mAP_75": 0.0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "status": "PASS"
+  },
+  "oracle_predictions": {
+    "mAP_50_95": 1.0,
+    "mAP_50": 1.0,
+    "mAP_75": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "status": "PASS",
+    "minimum_expected_map_50_95": 0.9
+  },
+  "artifacts": {
+    "empty_predictions_json": "results\\evaluation_pipeline_best_seq02\\sanity\\predictions_empty.json",
+    "oracle_predictions_json": "results\\evaluation_pipeline_best_seq02\\sanity\\predictions_oracle.json"
+  },
+  "status": "PASS"
+}

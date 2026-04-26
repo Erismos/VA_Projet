@@ -25,10 +25,11 @@ def _run_script(script_path: Path, args: list[str]) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Unified project launcher for P1-P5")
+    parser = argparse.ArgumentParser(description="Unified project launcher")
     parser.add_argument(
         "component",
         choices=[
+            "video-preprocessing",
             "p1",
             "p2",
             "object-detection",
@@ -37,9 +38,9 @@ def build_parser() -> argparse.ArgumentParser:
             "p4",
             "p4-eval",
             "p4-visualize",
+            "evaluation-pipeline",
             "p5",
             "mot17-video",
-            "e2e-smoke",
         ],
         help="Pipeline component to run",
     )
@@ -53,8 +54,8 @@ def main() -> None:
 
     root = Path(__file__).resolve().parents[1]
 
-    if args.component == "p1":
-        _run_module("P1.cli", component_args)
+    if args.component in {"video-preprocessing", "p1"}:
+        _run_module("video_preprocessing.cli", component_args)
         return
     if args.component in {"p2", "object-detection"}:
         _run_module("object_detection.cli", component_args)
@@ -74,14 +75,11 @@ def main() -> None:
     if args.component == "p4-visualize":
         _run_script(root / "pipeline-suivi-P4" / "visualize.py", component_args)
         return
-    if args.component == "p5":
-        _run_module("main_p5", component_args)
+    if args.component in {"evaluation-pipeline", "p5"}:
+        _run_module("evaluation_pipeline.cli", component_args)
         return
     if args.component == "mot17-video":
-        _run_module("p5.data.mot_to_video", component_args)
-        return
-    if args.component == "e2e-smoke":
-        _run_module("project.e2e", component_args)
+        _run_module("evaluation_pipeline.data.mot_to_video", component_args)
         return
 
     raise ValueError(f"Unsupported component: {args.component}")

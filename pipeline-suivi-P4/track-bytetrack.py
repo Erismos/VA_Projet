@@ -11,13 +11,10 @@ from typing import Any
 
 import cv2
 import pandas as pd
-from ultralytics import YOLO
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.append(str(ROOT_DIR))
-
-from object_detection.detectors import DetectorConfig, create_detector
 
 
 def get_color(track_id: int) -> tuple[int, int, int]:
@@ -214,8 +211,16 @@ def run_tracking(
     tracker = IoUTracker(iou_threshold=tracker_iou, max_age=tracker_max_age)
 
     if detector_backend == "ultralytics-track":
+        try:
+            from ultralytics import YOLO
+        except ModuleNotFoundError as exc:
+            raise ModuleNotFoundError(
+                "ultralytics is required when detector-backend=ultralytics-track"
+            ) from exc
         yolo_track_model = YOLO(weights)
     elif detector_backend in {"p2-yolo", "p2-fasterrcnn"}:
+        from object_detection.detectors import DetectorConfig, create_detector
+
         model_name = "yolo" if detector_backend == "p2-yolo" else "fasterrcnn"
         cfg = DetectorConfig(model=model_name, weights=weights, conf=conf, iou=iou, device=device)
         p2_detector = create_detector(cfg)

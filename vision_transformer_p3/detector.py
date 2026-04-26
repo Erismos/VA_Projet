@@ -47,9 +47,12 @@ DINO_MODEL_ID = "IDEA-Research/grounding-dino-base"  # via transformers >= 4.38
 class BaseTransformerDetector(ABC):
     """Interface commune à DETR et DINO-DETR."""
 
-    def __init__(self, threshold: float, device: str) -> None:
+    def __init__(self, threshold: float, device: str, cache_dir: str | None = None) -> None:
         self.threshold = threshold
         self.device = torch.device(device)
+        self.cache_dir = Path(cache_dir) if cache_dir else None
+        if self.cache_dir is not None:
+            self.cache_dir.mkdir(parents=True, exist_ok=True)
         self._load_model()
 
     @abstractmethod
@@ -127,8 +130,11 @@ class DetrDetector(BaseTransformerDetector):
         from transformers import DetrForObjectDetection, DetrImageProcessor
 
         print(f"[P3] Chargement DETR depuis '{DETR_MODEL_ID}' …")
-        self._processor = DetrImageProcessor.from_pretrained(DETR_MODEL_ID)
-        self._model = DetrForObjectDetection.from_pretrained(DETR_MODEL_ID)
+        load_kwargs: dict[str, str] = {}
+        if self.cache_dir is not None:
+            load_kwargs["cache_dir"] = str(self.cache_dir)
+        self._processor = DetrImageProcessor.from_pretrained(DETR_MODEL_ID, **load_kwargs)
+        self._model = DetrForObjectDetection.from_pretrained(DETR_MODEL_ID, **load_kwargs)
         self._model.to(self.device)
         self._model.eval()
         print("[P3] DETR chargé.")
@@ -201,8 +207,11 @@ class DinoDETRDetector(BaseTransformerDetector):
         from transformers import AutoModelForZeroShotObjectDetection, AutoProcessor
 
         print(f"[P3] Chargement DINO-DETR depuis '{DINO_MODEL_ID}' …")
-        self._processor = AutoProcessor.from_pretrained(DINO_MODEL_ID)
-        self._model = AutoModelForZeroShotObjectDetection.from_pretrained(DINO_MODEL_ID)
+        load_kwargs: dict[str, str] = {}
+        if self.cache_dir is not None:
+            load_kwargs["cache_dir"] = str(self.cache_dir)
+        self._processor = AutoProcessor.from_pretrained(DINO_MODEL_ID, **load_kwargs)
+        self._model = AutoModelForZeroShotObjectDetection.from_pretrained(DINO_MODEL_ID, **load_kwargs)
         self._model.to(self.device)
         self._model.eval()
         print("[P3] DINO-DETR chargé.")
@@ -243,12 +252,13 @@ def build_detector(
     model: str,
     threshold: float,
     device: str,
+    cache_dir: str | None = None,
 ) -> BaseTransformerDetector:
     """Factory — retourne le bon détecteur selon le nom."""
     if model == "detr":
-        return DetrDetector(threshold=threshold, device=device)
+        return DetrDetector(threshold=threshold, device=device, cache_dir=cache_dir)
     if model == "dino_detr":
-        return DinoDETRDetector(threshold=threshold, device=device)
+        return DinoDETRDetector(threshold=threshold, device=device, cache_dir=cache_dir)
     raise ValueError(f"Modèle inconnu : '{model}'. Choisir 'detr' ou 'dino_detr'.")
 
 
@@ -333,6 +343,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Device PyTorch : 'cpu', 'cuda', 'cuda:0', etc.",
     )
     parser.add_argument(
+        "--cache-dir",
+        default="models/vision_transformer_p3/hf_cache",
+        help="Dossier de cache local des poids Transformers.",
+    )
+    parser.add_argument(
         "--output",
         default="results/p3/predictions.json",
         help="Chemin du fichier JSON de sortie.",
@@ -358,6 +373,7 @@ def main() -> None:
         model=args.model,
         threshold=args.threshold,
         device=args.device,
+        cache_dir=args.cache_dir,
     )
 
     print(f"[P3] Traitement de '{args.source}' avec {args.model.upper()} …")

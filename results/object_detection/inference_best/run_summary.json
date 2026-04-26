@@ -1,0 +1,12 @@
+[
+  {
+    "source": "data\\sample_video.mp4",
+    "model": "yolo",
+    "weights": "models/object_detection/yolo_baseline/weights/best.pt",
+    "frames": 600,
+    "detections": 9243,
+    "inference_fps": 37.41400461191153,
+    "json": "results\\object_detection\\inference_best\\predictions.json",
+    "csv": "results\\object_detection\\inference_best\\predictions.csv"
+  }
+]

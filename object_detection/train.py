@@ -5,13 +5,6 @@ import yaml
 from pathlib import Path
 from typing import Any
 
-import torch
-from ultralytics import YOLO
-from torchvision.models.detection import (
-    FasterRCNN_ResNet50_FPN_Weights,
-    fasterrcnn_resnet50_fpn,
-)
-
 from object_detection.export_utils import save_json
 
 
@@ -65,6 +58,11 @@ def train_yolo(
     project: str,
     name: str,
 ) -> dict[str, Any]:
+    from ultralytics import YOLO
+
+    project_dir = Path(project).resolve()
+    project_dir.mkdir(parents=True, exist_ok=True)
+
     model = YOLO(weights)
     result = model.train(
         data=dataset_yaml,
@@ -72,9 +70,11 @@ def train_yolo(
         imgsz=imgsz,
         batch=batch,
         device=device,
-        project=project,
+        project=str(project_dir),
         name=name,
     )
+    save_dir = Path(result.save_dir).resolve()
+    trained_weights = save_dir / "weights" / "best.pt"
     summary = {
         "model": "yolo",
         "weights_start": weights,
@@ -83,9 +83,11 @@ def train_yolo(
         "imgsz": imgsz,
         "batch": batch,
         "device": device,
-        "save_dir": str(result.save_dir),
+        "project": str(project_dir),
+        "save_dir": str(save_dir),
+        "trained_weights": str(trained_weights),
     }
-    save_json([summary], Path(project) / name / "train_summary.json")
+    save_json([summary], project_dir / name / "train_summary.json")
     return summary
 
 
@@ -95,6 +97,12 @@ def train_fasterrcnn_placeholder(
     device: str,
     output_dir: str,
 ) -> dict[str, Any]:
+    import torch
+    from torchvision.models.detection import (
+        FasterRCNN_ResNet50_FPN_Weights,
+        fasterrcnn_resnet50_fpn,
+    )
+
     model = fasterrcnn_resnet50_fpn(weights=FasterRCNN_ResNet50_FPN_Weights.DEFAULT)
     model.to(torch.device(device))
 

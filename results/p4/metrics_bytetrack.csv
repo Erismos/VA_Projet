@@ -1,2 +1,2 @@
-,num_frames,mota,motp,num_switches,num_misses,num_false_positives,mostly_tracked,mostly_lost
-Tracking,600,0.1759555840273329,0.1825258428759733,57,5133,2528,14,30
+,num_frames,mota,motp,num_switches,idf1,num_misses,num_false_positives,mostly_tracked,mostly_lost
+Tracking,600,0.7628656843903481,0.12147864858753346,134,0.6479660379386318,1105,982,35,5

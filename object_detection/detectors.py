@@ -6,7 +6,6 @@ from typing import Any
 
 import cv2
 import torch
-from ultralytics import YOLO
 from torchvision.models.detection import (
     FasterRCNN_ResNet50_FPN_Weights,
     fasterrcnn_resnet50_fpn,
@@ -31,6 +30,10 @@ class BaseDetector:
 class YoloDetector(BaseDetector):
     def __init__(self, cfg: DetectorConfig) -> None:
         self.cfg = cfg
+        try:
+            from ultralytics import YOLO
+        except ModuleNotFoundError as exc:
+            raise ModuleNotFoundError("ultralytics is required for YOLO detector") from exc
         self.model = YOLO(cfg.weights)
 
     def predict_frame(self, frame_bgr: Any, frame_id: int) -> list[dict[str, Any]]:

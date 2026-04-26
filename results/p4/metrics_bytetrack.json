@@ -1,0 +1,9 @@
+{
+  "mota": 0.7628656843903481,
+  "motp": 0.12147864858753346,
+  "id_switches": 134.0,
+  "idf1": 0.6479660379386318,
+  "hota": null,
+  "hota_source": "trackeval-not-installed",
+  "metrics_csv": "results\\p4\\metrics_bytetrack.csv"
+}

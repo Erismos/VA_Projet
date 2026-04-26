@@ -1,0 +1,35 @@
+{
+  "eval_mode": "single-sequence",
+  "operating_threshold": 0.25,
+  "models": [
+    {
+      "model": "YOLOv11",
+      "mAP_50_95": 0.6718806653805665,
+      "mAP_50": 0.869362618299183,
+      "mAP_75": 0.7545002583525707,
+      "precision": 0.8945147679324894,
+      "recall": 0.880229958479719,
+      "f1": 0.8873148744365744,
+      "operating_threshold": 0.25
+    },
+    {
+      "model": "DETR",
+      "mAP_50_95": 0.3176431172501807,
+      "mAP_50": 0.5863308273038497,
+      "mAP_75": 0.30867629474495567,
+      "precision": 0.48865791669827785,
+      "recall": 0.6857234110507825,
+      "f1": 0.570656507486489,
+      "operating_threshold": 0.25
+    }
+  ],
+  "verdict": {
+    "protocol": {
+      "status": "PASS",
+      "checks": {
+        "source_gt_coherence": "PASS",
+        "sanity_checks": "PASS"
+      }
+    }
+  }
+}

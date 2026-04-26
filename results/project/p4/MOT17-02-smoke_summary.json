@@ -1,8 +1,0 @@
-{
-  "backend": "detections-json",
-  "mot_seq_dir": "data/raw/MOT17/train/MOT17-02-FRCNN",
-  "frames": 600,
-  "tracks": 222,
-  "mot_file": "results\\project\\p4\\MOT17-02-smoke.txt",
-  "video_file": "results\\project\\p4\\MOT17-02-smoke.mp4"
-}

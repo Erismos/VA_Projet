@@ -60,11 +60,12 @@ def run_benchmark(
     model: str,
     threshold: float,
     device: str,
+    cache_dir: str,
     warmup: int,
     frames: int,
     output: str,
 ) -> dict:
-    detector = build_detector(model=model, threshold=threshold, device=device)
+    detector = build_detector(model=model, threshold=threshold, device=device, cache_dir=cache_dir)
 
     print(f"[P3 bench] Chargement de {frames + warmup} frames …")
     all_frames = load_frames(source, max_frames=frames + warmup)
@@ -140,6 +141,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--threshold", type=float, default=0.7)
     parser.add_argument("--device", default="cpu")
+    parser.add_argument(
+        "--cache-dir",
+        default="models/vision_transformer_p3/hf_cache",
+        help="Dossier de cache local des poids Transformers.",
+    )
     parser.add_argument("--warmup", type=int, default=5, help="Frames de chauffe (non comptées).")
     parser.add_argument("--frames", type=int, default=100, help="Frames mesurées.")
     parser.add_argument(
@@ -157,6 +163,7 @@ def main() -> None:
         model=args.model,
         threshold=args.threshold,
         device=args.device,
+        cache_dir=args.cache_dir,
         warmup=args.warmup,
         frames=args.frames,
         output=args.output,

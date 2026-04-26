@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import motmetrics as mm
 import numpy as np
 import pandas as pd
+
+if not hasattr(np, "asfarray"):
+    # motmetrics relies on np.asfarray, removed in NumPy >= 2.0.
+    np.asfarray = lambda arr: np.asarray(arr, dtype=float)
 
 
 def evaluate_tracking(gt_file: str, pred_file: str, output_csv: str) -> dict[str, float]:
@@ -44,6 +49,7 @@ def evaluate_tracking(gt_file: str, pred_file: str, output_csv: str) -> dict[str
             "mota",
             "motp",
             "num_switches",
+            "idf1",
             "num_misses",
             "num_false_positives",
             "mostly_tracked",
@@ -57,7 +63,19 @@ def evaluate_tracking(gt_file: str, pred_file: str, output_csv: str) -> dict[str
     summary.to_csv(output_path)
 
     mota = float(summary["mota"].values[0])
+    motp = float(summary["motp"].values[0])
     switches = float(summary["num_switches"].values[0])
+    idf1 = float(summary["idf1"].values[0])
+
+    # HOTA is not provided by motmetrics. We expose an explicit fallback when trackeval is unavailable.
+    hota: float | None = None
+    hota_source = "unavailable"
+    try:
+        import trackeval  # type: ignore  # noqa: F401
+
+        hota_source = "trackeval-installed-not-integrated"
+    except Exception:
+        hota_source = "trackeval-not-installed"
 
     print("\n" + "=" * 60)
     print("TRACKING RESULTS")
@@ -71,12 +89,19 @@ def evaluate_tracking(gt_file: str, pred_file: str, output_csv: str) -> dict[str
     )
     print("=" * 60)
     print(f"MOTA = {mota:.1%}")
+    print(f"MOTP = {motp:.4f}")
+    print(f"IDF1 = {idf1:.1%}")
     print(f"ID switches = {int(switches)}")
+    print(f"HOTA = {'N/A' if hota is None else f'{hota:.1%}'} ({hota_source})")
     print(f"Metrics CSV written to: {output_path}")
 
     return {
         "mota": mota,
+        "motp": motp,
         "id_switches": switches,
+        "idf1": idf1,
+        "hota": hota,
+        "hota_source": hota_source,
         "metrics_csv": str(output_path),
     }
 
@@ -98,12 +123,22 @@ def build_parser() -> argparse.ArgumentParser:
         default="results/p4/metrics_bytetrack.csv",
         help="Output CSV for MOT metrics",
     )
+    parser.add_argument(
+        "--output-json",
+        default="results/p4/metrics_bytetrack.json",
+        help="Output JSON report with MOTA/MOTP/ID switches/IDF1/HOTA fallback details",
+    )
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    evaluate_tracking(gt_file=args.gt_file, pred_file=args.pred_file, output_csv=args.output_csv)
+    results = evaluate_tracking(gt_file=args.gt_file, pred_file=args.pred_file, output_csv=args.output_csv)
+
+    output_json_path = Path(args.output_json)
+    output_json_path.parent.mkdir(parents=True, exist_ok=True)
+    output_json_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    print(f"Metrics JSON written to: {output_json_path}")
 
 
 if __name__ == "__main__":
